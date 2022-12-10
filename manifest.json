@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "PR Watcher",
-  "version": "1.0",
-  "description": "Watch specific PR actions to see if they all pass or fail and be notified",
+  "name": "Github PR Action Watcher",
+  "version": "1.0.0",
+  "description": "Watch specific PR action statuses to see if they all pass or fail and be notified",
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",
