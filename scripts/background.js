@@ -1,7 +1,10 @@
 const successMessage = "All checks have passed";
 const errorMessage = "Some checks were not successful";
+const noSetupMessage = "Continuous integration has not been set up";
 
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
+  console.log("onHistoryStateUpdated", details);
+
   chrome.scripting.executeScript({
     target: { tabId: details.tabId, allFrames: true },
     files: ["scripts/content.js"],
@@ -49,6 +52,8 @@ chrome.runtime.onMessage.addListener(
 
         chrome.notifications.clear(title);
       });
+    } else if (status && status.includes(noSetupMessage)) {
+      sendResponse("done");
     } else {
       sendResponse("processing");
     }

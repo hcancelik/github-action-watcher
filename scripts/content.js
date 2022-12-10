@@ -10,8 +10,6 @@ function setup() {
       <img alt="Watch Actions" id="github-pr-watcher-icon" src='${chrome.runtime.getURL("/images/icon-32.png")}' height='20' style='padding-right: 5px;' /> Watch Actions
      </div>`;
     button.addEventListener("click", () => {
-      console.info("Starting to watch actions");
-
       const img = document.getElementById("github-pr-watcher-icon");
 
       img.src = chrome.runtime.getURL("/images/loading.gif");
@@ -42,5 +40,15 @@ function setup() {
   }
 }
 
-
 setup();
+
+var observer = new MutationObserver(function() {
+  setup();
+});
+
+observer.observe(document.querySelector('.new-discussion-timeline'), {
+  attributes: false,
+  characterData: false,
+  childList: true,
+  subtree: true
+});
