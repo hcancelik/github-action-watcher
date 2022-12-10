@@ -34,6 +34,11 @@
     }
   ],
   "permissions": [
-    "notifications"
+    "notifications",
+    "webNavigation",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*/*/pull/*"
   ]
 }

@@ -1,6 +1,13 @@
 const successMessage = "All checks have passed";
 const errorMessage = "Some checks were not successful";
 
+chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
+  chrome.scripting.executeScript({
+    target: { tabId: details.tabId, allFrames: true },
+    files: ["scripts/content.js"],
+  });
+});
+
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     const { title, status } = request;
@@ -18,9 +25,9 @@ chrome.runtime.onMessage.addListener(
         message: `PR ${title} is ready to merge`,
         priority: 2,
         requireInteraction: true,
-      })
+      });
 
-      chrome.notifications.onClicked.addListener(function() {
+      chrome.notifications.onClicked.addListener(function () {
         chrome.tabs.update(id, { active: true });
 
         chrome.notifications.clear(title);
@@ -35,9 +42,9 @@ chrome.runtime.onMessage.addListener(
         message: `One or more of PR ${title} actions failed`,
         priority: 2,
         requireInteraction: true,
-      })
+      });
 
-      chrome.notifications.onClicked.addListener(function() {
+      chrome.notifications.onClicked.addListener(function () {
         chrome.tabs.update(id, { active: true });
 
         chrome.notifications.clear(title);
