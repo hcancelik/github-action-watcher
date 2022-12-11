@@ -3,8 +3,6 @@ const errorMessage = "Some checks were not successful";
 const noSetupMessage = "Continuous integration has not been set up";
 
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
-  console.log("onHistoryStateUpdated", details);
-
   chrome.scripting.executeScript({
     target: { tabId: details.tabId, allFrames: true },
     files: ["scripts/content.js"],
@@ -15,8 +13,6 @@ chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     const { title, status } = request;
     const { id } = sender.tab;
-
-    console.log(status);
 
     if (status && status.includes(successMessage)) {
       sendResponse("done");
