@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Github PR Action Watcher",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Watch specific PR action statuses to see if they all pass or fail and be notified",
   "icons": {
     "16": "images/icon-16.png",
@@ -36,7 +36,8 @@
   "permissions": [
     "notifications",
     "webNavigation",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "https://github.com/*/*/pull/*"
