@@ -17,8 +17,10 @@ function setup() {
       img.src = chrome.runtime.getURL("/images/loading.gif");
 
       const watchInterval = setInterval(() => {
+        const status = document.getElementById("partial-pull-merging")?.innerText || document.querySelector('section[aria-label="Checks"] h3').textContent.trim();
+
         const message = {
-          status: document.getElementById("partial-pull-merging")?.innerText,
+          status,
           title: document.querySelector(".js-issue-title.markdown-title")?.innerText,
         };
 
