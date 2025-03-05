@@ -17,7 +17,9 @@ function setup() {
       img.src = chrome.runtime.getURL("/images/loading.gif");
 
       const watchInterval = setInterval(() => {
-        const status = document.getElementById("partial-pull-merging")?.innerText || document.querySelector('section[aria-label="Checks"] h3').textContent.trim();
+        const status = document.getElementById("partial-pull-merging")?.innerText?.trim()
+          || document.querySelector('section[aria-label="Checks"] h3')?.textContent?.trim()
+          || 'N/A'
 
         const message = {
           status,
