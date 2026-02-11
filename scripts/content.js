@@ -1,5 +1,5 @@
 function setup() {
-  const actions = document.querySelector(".gh-header-actions");
+  const actions = document.querySelector('.gh-header-actions, [data-component="PH_Actions"]');
   const btn = document.getElementById("github-pr-watcher-button");
 
   if (actions && !btn) {
@@ -17,13 +17,18 @@ function setup() {
       img.src = chrome.runtime.getURL("/images/loading.gif");
 
       const watchInterval = setInterval(() => {
-        const status = document.getElementById("partial-pull-merging")?.innerText?.trim()
-          || document.querySelector('section[aria-label="Checks"] h3')?.textContent?.trim()
-          || 'N/A'
+        const status =
+          document.getElementById("partial-pull-merging")?.innerText?.trim() ||
+          document
+            .querySelector('section[aria-label="Checks"] h3')
+            ?.textContent?.trim() ||
+          "N/A";
 
         const message = {
           status,
-          title: document.querySelector(".js-issue-title.markdown-title")?.innerText,
+          title: document.querySelector(
+            '.js-issue-title.markdown-title, [data-component="PH_Title"] .markdown-title',
+          )?.innerText,
         };
 
         chrome.runtime.sendMessage(message, function (response) {
@@ -56,13 +61,15 @@ function setup() {
 
 setup();
 
-var observer = new MutationObserver(function() {
-  setup();
-});
+(function () {
+  let timeoutForObserver;
+  const observer = new MutationObserver(function () {
+    clearTimeout(timeoutForObserver);
+    timeoutForObserver = setTimeout(setup, 200);
+  });
 
-observer.observe(document.querySelector('.new-discussion-timeline'), {
-  attributes: false,
-  characterData: false,
-  childList: true,
-  subtree: true
-});
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+})();
